@@ -1,0 +1,36 @@
+/mnt/temp/uImage_m200: u-boot legacy uImage, Linux-3.12.19-rt30, Linux/PowerPC, OS Kernel Image (gzip), 5455759 bytes, Fri May  1 18:57:17 2015, Load Address: 0x00000000, Entry Point: 0x00000000, Header CRC: 0xC36AC416, Data CRC: 0x9B932153
+
+
+
+part1: uImage + dtb
+part2: uImage + dtb
+part3: root fs
+part4: dos unknown
+part5: config
+part6: more config
+part7: cache
+
+
+
+
+Missing in mainline:
+bman:
+	bpid-range
+qman:
+	fqid-range
+	pool-channel-range
+	cgrid-range
+
+??
+fman-memac-mdio vs fman-mdio ?
+
+
+
+setenv bootargs root=/dev/mmcblk0p2 rw rootdelay=2 console=ttyS0,115200 debug
+setenv openwrt "ext2load mmc 0:1 $fdtaddr image-m200.dtb; ext2load mmc 0:1 $loadaddr firebox_m200-kernel.bin; bootm $loadaddr - $fdtaddr"
+run openwrt
+
+
+setenv bootargs root=/dev/mmcblk0p2 rw rootdelay=2 console=ttyS0,115200 debug
+setenv openwrt "ext2load mmc 0:1 $fdtaddr image-m300.dtb; ext2load mmc 0:1 $loadaddr firebox_m300-kernel.bin; bootm $loadaddr - $fdtaddr"
+run openwrt

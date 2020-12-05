@@ -1,0 +1,41 @@
+SysARoot=mmcblk0p3
+SysBRoot=mmcblk0p2
+WGKernelfile=uImage_m200
+baudrate=115200
+bdev=sda3
+bootargs=root=/dev/mmcblk0p3 rw rootdelay=2 console=ttyS0,115200
+bootcmd=run wgBootSysA
+bootdelay=10
+bootfile=uImage
+bootloader_flash_update=protect off 0xeff40000 0xefffffff &&erase 0xeff40000 0xefffffff && cp.b 0x100000 0xeff40000 0xc0000 && protect on 0xeff40000 0xefffffff && cmp.b 0xeff40000 0x100000 0xc0000
+c=ffe
+consoledev=ttyS0
+eth1addr=00:90:7F:D1:35:C3
+eth2addr=00:90:7F:D1:35:C4
+eth3addr=00:90:7F:D1:35:C5
+eth4addr=00:90:7F:D1:35:C6
+ethact=FM1@DTSEC4
+ethaddr=00:90:7F:D1:35:C2
+ethprime=FM1@DTSEC4
+fdtaddr=fc0000
+fdtfile=m200.dtb
+fman_ucode=eff20000
+hwconfig=fsl_ddr:bank_intlv=cs0_cs1;usb1:dr_mode=host,phy_type=utmi;usb2:dr_mode=host,phy_type=utmi
+lannerboot=setenv bootargs root=/dev/ram rw rootdelay=10 console=ttyS0,115200 ramdisk_size=2800000 &&usb start && fatload mmc 0:1 1000000 uImage && fatload mmc 0:1 fc0000  m200.dtb && fatload mmc 0:1 2000000 lanner/rootfs.ext2.gz.u-boot.lanner && bootm 1000000 2000000 fc0000
+lannerboots=setenv bootargs root=/dev/ram rw rootdelay=10 console=ttyS0,115200 ramdisk_size=2800000 &&usb start && fatload usb 0:1 1000000 uImage && fatload usb 0:1 fc0000  m200.dtb && fatload usb 0:1 2000000 lanner/rootfs.ext2.gz.u-boot.lanner.usb && bootm 1000000 2000000 fc0000
+loadaddr=1000000
+netdev=eth0
+nfsboot=setenv bootargs root=/dev/nfs rw nfsroot=$serverip:$rootpath ip=$ipaddr:$serverip:$gatewayip:$netmask:$hostname:$netdev:off console=$consoledev,$baudrate $othbootargs;tftp $loadaddr $bootfile;tftp $fdtaddr $fdtfile;bootm $loadaddr - $fdtaddr
+nuke_env=protect off 0xeff30000 0xeff3ffff && erase 0xeff30000 0xeff3ffff
+ramboot=setenv bootargs root=/dev/ram rw console=$consoledev,$baudrate $othbootargs; tftp $ramdiskaddr $ramdiskfile;tftp $loadaddr $bootfile;tftp $fdtaddr $fdtfile;bootm $loadaddr $ramdiskaddr $fdtaddr
+ramdiskaddr=2000000
+ramdiskfile=rootfs.ext2.gz.u-boot
+rootpath=/opt/nfsroot
+uboot="u-boot.bin"
+ubootaddr=0xeff40000
+wgBootBoot=setenv bootargs root=/dev/$SysARoot rw rootdelay=2 console=$consoledev,$baudrate $othbootargs; ext2load mmc 0:1 $fdtaddr $fdtfile; ext2load mmc 0:1 $loadaddr $WGKernelfile; usb start; bootm $loadaddr - $fdtaddr;
+wgBootRecovery=setenv bootargs wgmode=safe root=/dev/$SysARoot rw console=$consoledev,$baudrate $othbootargs; ext2load mmc 0:3 $fdtaddr $fdtfile; ext2load mmc 0:3 $loadaddr $WGKernelfile; usb start ;bootm $loadaddr - $fdtaddr;
+wgBootSysA=setenv bootargs root=/dev/$SysARoot rw rootdelay=2 console=$consoledev,$baudrate $othbootargs; ext2load mmc 0:3 $fdtaddr $fdtfile; ext2load mmc 0:3 $loadaddr $WGKernelfile; usb start; bootm $loadaddr - $fdtaddr;
+wgBootSysB=setenv bootargs root=/dev/$SysBRoot rw rootdelay=2 console=$consoledev,$baudrate $othbootargs; ext2load mmc 0:2 $fdtaddr $fdtfile; ext2load mmc 0:2 $loadaddr $WGKernelfile; usb start; bootm $loadaddr - $fdtaddr;
+
+Environment size: 2957/8188 bytes

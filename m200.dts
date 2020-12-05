@@ -1,0 +1,292 @@
+/dts-v1/;
+
+/ {
+	compatible = "fsl,T1042RDB_PI";
+	#address-cells = <0x02>;
+	#size-cells = <0x02>;
+	interrupt-parent = <0x01>;
+	model = "fsl,T1042RDB_PI";
+
+	aliases {
+		ccsr = "/soc@ffe000000";
+		dcsr = "/dcsr@f00000000";
+		dma0 = "/soc@ffe000000/dma@100300";
+		dma1 = "/soc@ffe000000/dma@101300";
+		serial0 = "/soc@ffe000000/serial@11c500";
+		serial1 = "/soc@ffe000000/serial@11c600";
+		serial2 = "/soc@ffe000000/serial@11d500";
+		serial3 = "/soc@ffe000000/serial@11d600";
+		pci0 = "/pcie@ffe240000";
+		pci1 = "/pcie@ffe250000";
+		pci2 = "/pcie@ffe260000";
+		pci3 = "/pcie@ffe270000";
+		usb0 = "/soc@ffe000000/usb@210000";
+		usb1 = "/soc@ffe000000/usb@211000";
+		sdhc = "/soc@ffe000000/sdhc@114000";
+		crypto = "/soc@ffe000000/crypto@300000";
+		pme = "/soc@ffe000000/pme@316000";
+		qman = "/soc@ffe000000/qman@318000";
+		bman = "/soc@ffe000000/bman@31a000";
+		fman0 = "/soc@ffe000000/fman@400000";
+		ethernet0 = "/soc@ffe000000/fman@400000/ethernet@e4000";
+		ethernet1 = "/soc@ffe000000/fman@400000/ethernet@e0000";
+		ethernet2 = "/soc@ffe000000/fman@400000/ethernet@e2000";
+		ethernet3 = "/soc@ffe000000/fman@400000/ethernet@e6000";
+		ethernet4 = "/soc@ffe000000/fman@400000/ethernet@e8000";
+		vga = "/soc@ffe000000/display@180000";
+		display = "/soc@ffe000000/display@180000";
+		phy_sgmii_0 = "/soc@ffe000000/fman@400000/mdio@fc000/ethernet-phy@01";
+		phy_sgmii_1 = "/soc@ffe000000/fman@400000/mdio@fc000/ethernet-phy@02";
+		phy_sgmii_2 = "/soc@ffe000000/fman@400000/mdio@fc000/ethernet-phy@03";
+	};
+
+	soc@ffe000000 {
+		ranges = <0x00 0x0f 0xfe000000 0x1000000>;
+		reg = <0x0f 0xfe000000 0x00 0x1000>;
+		#address-cells = <0x01>;
+		#size-cells = <0x01>;
+		device_type = "soc";
+		compatible = "simple-bus";
+
+		fman@400000 {
+			sleep = <0x10 0x08>;
+			#address-cells = <0x01>;
+			#size-cells = <0x01>;
+			cell-index = <0x00>;
+			compatible = "fsl,fman\0simple-bus";
+			ranges = <0x00 0x400000 0x100000>;
+			reg = <0x400000 0x100000>;
+			clock-frequency = <0x00>;
+			interrupts = <0x60 0x02 0x00 0x00 0x10 0x02 0x01 0x01>;
+
+			cc {
+				compatible = "fsl,fman-cc";
+			};
+
+			bmi@80000 {
+				compatible = "fsl,fman-bmi";
+				reg = <0x80000 0x400>;
+			};
+
+			qmi@80400 {
+				compatible = "fsl,fman-qmi";
+				reg = <0x80400 0x400>;
+			};
+
+			policer@c0000 {
+				compatible = "fsl,fman-policer";
+				reg = <0xc0000 0x1000>;
+			};
+
+			keygen@c1000 {
+				compatible = "fsl,fman-keygen";
+				reg = <0xc1000 0x1000>;
+			};
+
+			dma@c2000 {
+				compatible = "fsl,fman-dma";
+				reg = <0xc2000 0x1000>;
+			};
+
+			fpm@c3000 {
+				compatible = "fsl,fman-fpm";
+				reg = <0xc3000 0x1000>;
+			};
+
+			parser@c7000 {
+				compatible = "fsl,fman-parser";
+				reg = <0xc7000 0x1000>;
+			};
+
+			vsps@dc000 {
+				compatible = "fsl,fman-vsps";
+				reg = <0xdc000 0x1000>;
+			};
+
+			rtc@fe000 {
+				compatible = "fsl,fman-rtc";
+				reg = <0xfe000 0x1000>;
+				linux,phandle = <0x14>;
+				phandle = <0x14>;
+			};
+
+
+		};
+
+		tdm@185000 {
+			compatible = "fsl,tdm1.0";
+			reg = <0x185000 0x200 0x186000 0x2000>;
+			clock-frequency = <0x00>;
+			interrupts = <0x31 0x08 0x00 0x00>;
+			fsl,max-time-slots = <0x80>;
+		};
+
+		pme@316000 {
+			compatible = "fsl,pme";
+			reg = <0x316000 0x10000>;
+			interrupts = <0x10 0x02 0x01 0x05>;
+		};
+
+		l2switch@800000 {
+			#address-cells = <0x01>;
+			#size-cells = <0x00>;
+			compatible = "vitesse-9953";
+			clock-frequency = <0x00>;
+			reg = <0x800000 0x290000>;
+			interrupts = <0x1a 0x02 0x00 0x00>;
+
+			port@100000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x00>;
+				tbi-handle = <0x25>;
+			};
+
+			port@110000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x01>;
+				tbi-handle = <0x26>;
+			};
+
+			port@120000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x02>;
+				tbi-handle = <0x27>;
+			};
+
+			port@130000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x03>;
+				tbi-handle = <0x28>;
+			};
+
+			port@140000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x04>;
+				tbi-handle = <0x29>;
+			};
+
+			port@150000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x05>;
+				tbi-handle = <0x2a>;
+			};
+
+			port@160000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x06>;
+				tbi-handle = <0x2b>;
+			};
+
+			port@170000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x07>;
+				tbi-handle = <0x2c>;
+			};
+
+			port@180000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x08>;
+				fixed-link = <0x02 0x01 0x9c4 0x00 0x00>;
+				phy-connection-type = "sgmii";
+			};
+
+			port@190000 {
+				compatible = "vitesse-9953-port";
+				port-index = <0x09>;
+				fixed-link = <0x03 0x01 0x9c4 0x00 0x00>;
+				phy-connection-type = "sgmii";
+			};
+
+			mdio@700ac {
+				#address-cells = <0x01>;
+				#size-cells = <0x00>;
+				compatible = "vitesse-9953-mdio";
+
+				tbi-phy@4 {
+					reg = <0x04>;
+					device_type = "tbi-phy";
+					linux,phandle = <0x25>;
+					phandle = <0x25>;
+				};
+
+				tbi-phy@5 {
+					reg = <0x05>;
+					device_type = "tbi-phy";
+					linux,phandle = <0x26>;
+					phandle = <0x26>;
+				};
+
+				tbi-phy@6 {
+					reg = <0x06>;
+					device_type = "tbi-phy";
+					linux,phandle = <0x27>;
+					phandle = <0x27>;
+				};
+
+				tbi-phy@7 {
+					reg = <0x07>;
+					device_type = "tbi-phy";
+					linux,phandle = <0x28>;
+					phandle = <0x28>;
+				};
+
+				tbi-phy@8 {
+					reg = <0x08>;
+					device_type = "tbi-phy";
+					linux,phandle = <0x29>;
+					phandle = <0x29>;
+				};
+
+				tbi-phy@9 {
+					reg = <0x09>;
+					device_type = "tbi-phy";
+					linux,phandle = <0x2a>;
+					phandle = <0x2a>;
+				};
+
+				tbi-phy@a {
+					reg = <0x0a>;
+					device_type = "tbi-phy";
+					linux,phandle = <0x2b>;
+					phandle = <0x2b>;
+				};
+
+				tbi-phy@b {
+					reg = <0x0b>;
+					device_type = "tbi-phy";
+					linux,phandle = <0x2c>;
+					phandle = <0x2c>;
+				};
+			};
+		};
+	};
+
+	fsl,dpaa {
+		compatible = "fsl,t1042-dpaa\0fsl,dpaa";
+
+		ethernet@0 {
+			compatible = "fsl,t1040-dpa-ethernet\0fsl,dpa-ethernet";
+			fsl,fman-mac = <0x2e>;
+		};
+
+		ethernet@1 {
+			compatible = "fsl,t1040-dpa-ethernet\0fsl,dpa-ethernet";
+			fsl,fman-mac = <0x2f>;
+		};
+
+		ethernet@2 {
+			compatible = "fsl,t1040-dpa-ethernet\0fsl,dpa-ethernet";
+			fsl,fman-mac = <0x30>;
+		};
+
+		ethernet@3 {
+			compatible = "fsl,t1042-dpa-ethernet\0fsl,dpa-ethernet";
+			fsl,fman-mac = <0x31>;
+		};
+
+		ethernet@4 {
+			compatible = "fsl,t1042-dpa-ethernet\0fsl,dpa-ethernet";
+			fsl,fman-mac = <0x32>;
+		};
+	};
+};

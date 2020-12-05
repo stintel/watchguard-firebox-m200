@@ -1,0 +1,17 @@
+ethernet0   ethernet@e4000  sgmii
+ethernet1   ethernet@e0000  sgmii
+ethernet2   ethernet@e2000  sgmii
+ethernet3   ethernet@e6000  rgmii   1000/FD
+ethernet4   ethernet@e8000  rgmii   1000/FD
+
+
+swp0
+swp1
+swp2
+swp3
+swp4
+swp5
+swp6
+swp7
+swp8    2500/FD
+swp9    2500/FD

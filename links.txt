@@ -1,0 +1,14 @@
+Introduction to Device Trees
+https://www.nxp.com/docs/en/application-note/AN5125.pdf
+
+RCW
+https://github.com/qoriq-open-source/rcw
+
+QorIQ open source
+https://github.com/qoriq-open-source/
+
+QorIQ T1040RDB
+https://www.nxp.com/docs/en/user-guide/T1040RDBPAUG.pdf
+
+QCVS PBL UG
+https://www.nxp.com/docs/en/user-guide/QCVS_PBL_User_Guide.pdf
